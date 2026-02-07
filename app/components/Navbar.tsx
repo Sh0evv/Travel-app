@@ -12,7 +12,8 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hasToken, setHasToken] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
-  const profileRef = useRef(null);
+  const profileRef = useRef<HTMLDivElement>(null); // <--- тип указан
+  ;
 
   const navLinks = [
     { name: "Home", href: "/" },
