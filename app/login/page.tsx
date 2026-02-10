@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Button from "../components/Button";
 import Input from "../components/Input";
 
 import { Lock, Plane, ArrowRight, User, EyeOff, Eye } from "lucide-react";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { isLoggedIn, setToken } from "@/lib/auth";
-import Button from "../components/Button";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -141,7 +141,7 @@ export default function LoginPage() {
                 className="w-full h-12 flex items-center justify-between px-4 group"
                 disabled={isLoading}
               >
-                <span>Sign In</span>  
+                <span>Sign In</span>
                 <ArrowRight className="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" />
               </Button>
             </form>

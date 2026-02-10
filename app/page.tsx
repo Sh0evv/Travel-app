@@ -1,13 +1,12 @@
 "use client";
 
-
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { isLoggedIn } from "@/lib/auth";
 
 import Link from "next/link";
 import { ArrowRight, Calendar, Globe, Heart, Shield, Star, Users } from "lucide-react";
+import BackgroundVideo from "./components/BackgroundVideo";
 
 
 
@@ -48,66 +47,54 @@ export default function HomePage() {
 
 
 
-    const backgrounds = [
-        { type: "video", src: "/videos/vidgap_7506480973706530070_hd.mp4" }, // видео в public/videos
-
-    ];
-
     return (
         <div>
             <div className="relative w-full min-h-screen overflow-hidden">
-                {/* Фон */}
-                {backgrounds.map((bg, index) => {
-                    const isActive = index === bgIndex;
-                    if (bg.type === "video") {
-                        return (
-                            <video
-                                key={index}
-                                className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${isActive ? "opacity-100" : "opacity-0"
-                                    }`}
-                                autoPlay
-                                muted
-                                loop
-                                playsInline
-                            >
-                                <source src={bg.src} type="video/mp4" />
-                            </video>
-                        );
-                    } else {
-                        return (
-                            <div
-                                key={index}
-                                className={`absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ${isActive ? "opacity-100" : "opacity-0"
-                                    }`}
-                                style={{ backgroundImage: `url('${bg.src}')` }}
-                            ></div>
-                        );
-                    }
-                })}
+                {/* === Фоновое видео с кнопкой включения/выключения звука === */}
+                <BackgroundVideo />
 
-                {/* Затемнение */}
-                <div className="absolute inset-0 bg-black/50 transition-opacity duration-1000"></div>
+                {/* === Затемнение поверх видео === */}
+                <div className="absolute inset-0 bg-black/50"></div>
 
-                {/* Контент по центру */}
-                <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4">
+                {/* === Контент по центру экрана === */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 z-10">
                     <h1 className="mb-10 text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight">
                         Explore the World <span className="text-yellow-500">with Travel App</span>
                     </h1>
 
-
-                    <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                        <Link
-                            href="/destinations"
-                            className="px-6 py-3 rounded-lg bg-yellow-500 text-black font-medium hover:bg-yellow-600 transition"
-                        >
-                            Start Your Journey →
-                        </Link>
-                        <Link
-                            href="/login"
-                            className="px-6 py-3 rounded-lg bg-white text-black font-medium hover:bg-gray-100 transition"
-                        >
-                            Sign In
-                        </Link>
+                    {/* === Кнопки Start/SignIn/MyBookings === */}
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        {!isLoggedIn() ? (
+                            <>
+                                <Link
+                                    href="/destinations"
+                                    className="px-6 py-3 rounded-lg bg-yellow-500 text-black font-medium hover:bg-yellow-600 transition"
+                                >
+                                    Start Your Journey →
+                                </Link>
+                                <Link
+                                    href="/login"
+                                    className="px-6 py-3 rounded-lg bg-white text-black font-medium hover:bg-gray-100 transition"
+                                >
+                                    Sign In
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link
+                                    href="/my-bookings"
+                                    className="px-6 py-3 rounded-lg bg-green-500 text-white font-medium hover:bg-green-600 transition"
+                                >
+                                    My Bookings →
+                                </Link>
+                                <Link
+                                    href="/destinations"
+                                    className="px-6 py-3 rounded-lg bg-yellow-500 text-black font-medium hover:bg-yellow-600 transition"
+                                >
+                                    Book a Trip →
+                                </Link>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

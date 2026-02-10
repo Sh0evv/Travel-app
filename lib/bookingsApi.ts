@@ -1,4 +1,3 @@
-// bookingsApi.ts
 import { getToken } from "./auth";
 
 export const bookingsApi = {
@@ -9,17 +8,17 @@ export const bookingsApi = {
     const res = await fetch(
       `https://student2.softclub.tj/bookings/bookings/${bookingId}/cancel`,
       {
-        method: "POST", // сервер ожидает POST
+        method: "DELETE", // пробуем DELETE
         headers: {
-          Authorization: `Bearer ${token}`, // обязательно токен
+          Authorization: `Bearer ${token}`,
           Accept: "application/json",
         },
       },
     );
 
     if (!res.ok) {
-      const errData = await res.json();
-      const message = errData.detail || "Неизвестная ошибка";
+      const errData = await res.json().catch(() => ({}));
+      const message = errData.detail || `Ошибка ${res.status}`;
       throw new Error(message);
     }
 
